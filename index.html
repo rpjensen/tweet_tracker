@@ -28,7 +28,7 @@
 		<main>
 			<section>
 				<h1>Tweet Tracker</h1>
-				<div class="graph-area">
+				<div class="graph__area">
 					<div class="y-axis">
 						<div class="y-axis__horizontal-section">
 							<span class="y-axis__label" id="y-axis__label-5">125</span>
@@ -46,7 +46,7 @@
 							<span class="y-axis__label" id="y-axis__label-1">25</span>
 						</div>
 					</div>
-					<div>
+					<div class="graph__right-side">
 						<div class="graph">
 							<div class="graph__horizontal-section">
 
@@ -107,31 +107,73 @@
 				</div>
 				<div id="input-controls">
 					<h3>Filters</h3>
-					<div class="label__control">
-						<input type="text" name="label__input-1" value="" placeholder="Input 1" class="label__input">
+					<div class="label-input__area">
+						<input type="text" name="label-input__widget-1" value="" placeholder="Input 1" class="label-input__widget">
 					</div>
-					<div class="label__control">
-						<input type="text" name="label__input-2" value="" placeholder="Input 2" class="label__input">
+					<div class="label-input__area">
+						<input type="text" name="label-input__widget-2" value="" placeholder="Input 2" class="label-input__widget">
 					</div>
-					<div class="label__control">
-						<input type="text" name="label__input-3" value="" placeholder="Input 3" class="label__input">
+					<div class="label-input__area">
+						<input type="text" name="label-input__widget-3" value="" placeholder="Input 3" class="label-input__widget">
 					</div>
-					<div class="label__control">
-						<input type="text" name="label__input-4" value="" placeholder="Input 4" class="label__input">
+					<div class="label-input__area">
+						<input type="text" name="label-input__widget-4" value="" placeholder="Input 4" class="label-input__widget">
 					</div>
-					<div class="label__control">
-						<input type="text" name="label__input-5" value="" placeholder="Input 5" class="label__input">
+					<div class="label-input__area">
+						<input type="text" name="label-input__widget-5" value="" placeholder="Input 5" class="label-input__widget">
 					</div>
-					<div class="label__control">
-						<input type="text" name="label__input-6" value="" placeholder="Input 6" class="label__input">
+					<div class="label-input__area">
+						<input type="text" name="label-input__widget-6" value="" placeholder="Input 6" class="label-input__widget">
 					</div>
-					<div class="label__control">
+					<div class="label-input__area">
 						<input type="button" name="execute-search" value="Reset" onclick="resetSearch()">
 					</div>
 				</div>
 			</section>
 			<section>
-
+				<div class="feed__header">
+					<div>
+						<h1>Live Feed <span class="selected-filter__label">(all)</span></h1>
+					</div>
+					<div class="feed__filter-reset">
+						reset
+					</div>
+				</div>
+				<div class="feed__area">
+					<div class="scroll-area">
+						<div class="twitter-feed">
+							<div class="tweet-box" id="tweet-id-1">
+								<p class="tweet">
+									<em class="matched-word">Science</em> is really cool and controversial!
+								</p>
+							</div>
+						</div>
+						<div class="tweet-box" id="tweet-id-2">
+								<p class="tweet">
+									<em class="matched-word">Science</em> is really cool and controversial!
+								</p>
+							</div>
+						</div>
+						<div class="tweet-box" id="tweet-id-3">
+								<p class="tweet">
+									<em class="matched-word">Science</em> is really cool and controversial!
+								</p>
+							</div>
+						</div>
+						<div class="tweet-box" id="tweet-id-4">
+								<p class="tweet">
+									<em class="matched-word">Science</em> is really cool and controversial!
+								</p>
+							</div>
+						</div>
+						<div class="tweet-box" id="tweet-id-5">
+								<p class="tweet">
+									<em class="matched-word">Science</em> is really cool and controversial!
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
 		</main>
 
@@ -139,6 +181,7 @@
 
 		</footer>
 
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<script src="tweets.js"></script>
 	</body>
 </html>
