@@ -21,8 +21,7 @@
 		</header>
 
 		<nav>
-			<a href="/index.html" title="Tweet Tracker">Tweet Tracker</a>
-			<a href="/popular-comparisons" title="Top Comparisons">Top Comparisons</a>
+			
 		</nav>
 
 		<main>
@@ -31,19 +30,19 @@
 				<div class="graph__area">
 					<div class="y-axis">
 						<div class="y-axis__horizontal-section">
-							<span class="y-axis__label" id="y-axis__label-5">125</span>
+							<span class="y-axis__label" id="y-axis__label-5">100</span>
 						</div>
 						<div class="y-axis__horizontal-section">
-							<span class="y-axis__label" id="y-axis__label-4">100</span>
+							<span class="y-axis__label" id="y-axis__label-4">80</span>
 						</div>
 						<div class="y-axis__horizontal-section">
-							<span class="y-axis__label" id="y-axis__label-3">75</span>
+							<span class="y-axis__label" id="y-axis__label-3">60</span>
 						</div>
 						<div class="y-axis__horizontal-section">
-							<span class="y-axis__label" id="y-axis__label-2">50</span>
+							<span class="y-axis__label" id="y-axis__label-2">40</span>
 						</div>
 						<div class="y-axis__horizontal-section">
-							<span class="y-axis__label" id="y-axis__label-1">25</span>
+							<span class="y-axis__label" id="y-axis__label-1">20</span>
 						</div>
 					</div>
 					<div class="graph__right-side">
@@ -65,30 +64,37 @@
 							</div>
 
 							<div class="graph__bar" id="graph__bar-1">
-
+								<div class="graph__bar__label">
+									
+								</div>
 							</div>
 							<div class="graph__bar" id="graph__bar-2">
-
-							</div>
+								<div class="graph__bar__label">
+									
+								</div>							</div>
 							<div class="graph__bar" id="graph__bar-3">
-
-							</div>
+								<div class="graph__bar__label">
+									
+								</div>							</div>
 							<div class="graph__bar" id="graph__bar-4">
-
-							</div>
+								<div class="graph__bar__label">
+									
+								</div>							</div>
 							<div class="graph__bar" id="graph__bar-5">
-
-							</div>
+								<div class="graph__bar__label">
+									
+								</div>							</div>
 							<div class="graph__bar" id="graph__bar-6">
-
-							</div>
+								<div class="graph__bar__label">
+									
+								</div>							</div>
 						</div>
 						<div class="x-axis">
 							<div class="x-axis__section">
-								<span class="x-axis-label" id="x-axis-label-1">Label 1</span>
+								<span class="x-axis-label" id="x-axis__label-1">Label 1</span>
 							</div>
 							<div class="x-axis__section">
-								<span class="x-axis__label" id="x-axis-label-2">Label 2</span>
+								<span class="x-axis__label" id="x-axis__label-2">Label 2</span>
 							</div>
 							<div class="x-axis__section">
 								<span class="x-axis__label" id="x-axis__label-3">Label 3</span>
@@ -106,7 +112,7 @@
 					</div>
 				</div>
 				<div id="input-controls">
-					<h3>Filters</h3>
+					<!--<h3>Filters</h3>
 					<div class="label-input__area">
 						<input type="text" name="label-input__widget-1" value="" placeholder="Input 1" class="label-input__widget">
 					</div>
@@ -125,26 +131,24 @@
 					<div class="label-input__area">
 						<input type="text" name="label-input__widget-6" value="" placeholder="Input 6" class="label-input__widget">
 					</div>
+				-->
+					<h3>Start/Stop</h3>
 					<div class="label-input__area">
-						<input type="button" name="execute-search" value="Reset" onclick="resetSearch()">
+						<input type="button" id="start-tracking" name="start-tracking" value="Track">
+						<input type="button" id="stop-tracking" name="stop-tracking" value="Stop">
 					</div>
 				</div>
 			</section>
 			<section "feed-section">
 				<div class="feed__header">
-					<div>
-						<h1>Live Feed <span class="selected-filter__label">(all)</span></h1>
-					</div>
-					<div class="feed__filter-reset">
-						reset
-					</div>
+					<h1>Live Feed <span class="selected-filter__label">(all)</span></h1>
 				</div>
 				<div class="feed__area">
 					<div class="scroll-area">
 						<div class="twitter-feed">
-							<div class="tweet-box" id="tweet-id-1">
+							<!--<div class="tweet-box" id="tweet-id-1">
 								<p class="tweet">
-									<em class="matched-word">Science</em> is really cool and controversial!
+									Text
 								</p>
 							</div>
 							<div class="tweet-box" id="tweet-id-2">
@@ -202,6 +206,7 @@
 									<em class="matched-word">Science</em> is really cool and controversial!
 								</p>
 							</div>
+						-->
 						</div>
 					</div>
 				</div>

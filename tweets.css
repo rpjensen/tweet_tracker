@@ -52,6 +52,7 @@ h1 {
 	height: 420px;
 	display: inline-block;
 	vertical-align: top;
+	position: relative;
 
 }
 
@@ -59,7 +60,7 @@ h1 {
 	/*background-color: #CCC;*/
 	height: 400px;
 	position: relative;
-	z-index: -10;
+	z-index: 0;
 	background-color: #DDD;
     padding-left: 5px;
     padding-top: 5px;
@@ -69,12 +70,30 @@ h1 {
 .graph__bar {
 	position: absolute;
 	bottom: 1px;
-	left: 50px;
-	height: 100px;
+	height: 0;
 	width: 40px;
 	background-color: red;
-	z-index: -12;
+	z-index: 10;
 	box-shadow: 1px -1px 3px #555;
+}
+
+#graph__bar-1 {
+	left: 50px;
+}
+#graph__bar-2 {
+	left: 190px;
+}
+#graph__bar-3 {
+	left: 330px;
+}
+#graph__bar-4 {
+	left: 470px;
+}
+#graph__bar-5 {
+	left: 610px;
+}
+#graph__bar-6 {
+	left: 750px;
 }
 
 .x-axis {
@@ -121,14 +140,17 @@ h1 {
     box-shadow: 1px 1px 5px #555 inset;
     overflow-y: auto;
     margin: auto auto auto 4em;
+    position: relative;
 }
 
 .scroll__area {
-	padding-right: 15px
+	padding-right: 15px;
+	position: relative;
 }
 
 .twitter-feed {
 	padding: 2px;
+	position: relative;
 }
 
 .tweet {
@@ -140,6 +162,10 @@ h1 {
 	border-top: 1px solid #888;
 }
 
+.tweet-box:hover {
+	background-color: #AADCED;
+}
+
 .twitter-feed > .tweet-box:first-of-type {
 	padding-top: 0px;
 	border-top: 0px solid #888;
@@ -148,4 +174,19 @@ h1 {
 .twitter-feed > .tweet-box:last-of-type {
 	padding-bottom: 0px;
 	border-bottom: 0px solid #888;
+}
+
+.selected-tweet {
+	background-color: #AADCED;
+}
+
+.selected-bar {
+
+}
+
+.graph__bar__label {
+	margin: 5px auto;
+	text-align: center;
+	width: 80%;
+	background-color: white;
 }
