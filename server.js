@@ -5,7 +5,7 @@
 			http = require("http"),
 			app = express(),
 			redis = require('node-redis'),
-			client = redis.createClient(6379, '127.0.0.1'),
+			client = redis.createClient(17264, 'pub-redis-17264.us-east-1-2.5.ec2.garantiadata.com'),
 			ntwitter = require('ntwitter'),
 			credentials = require('./credentials.json'),
 			twitter = ntwitter(credentials);
