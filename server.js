@@ -16,7 +16,12 @@
 
 
 	app.use(express.static(__dirname));
-	http.createServer(app).listen(3000);
+
+	var port = Number(process.env.PORT || 5000);
+	app.listen(port, function() {
+	  console.log("Listening on " + port);
+	});
+	//http.createServer(app).listen(3000);
 	
 	console.log("before");
 
