@@ -11,6 +11,7 @@
 			twitter = ntwitter(credentials);
 	var url = require('url');
 	var redisURL = url.parse(process.env.REDISCLOUD_URL);
+	console.log(redisURL);
 	var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 	//client.auth("rjensen");
 
@@ -149,7 +150,7 @@ client.hgetall("hosts", function (err, obj) {
 					getDone();
 				});
 			}
-console.log("waiting");
+			console.log("waiting");
 		/*	while(waiting > 0) {
 				// empty loop while we wait for async calls
 				// obviously not the most efficient way to do this
