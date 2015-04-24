@@ -5,10 +5,14 @@
 			http = require("http"),
 			app = express(),
 			redis = require('node-redis'),
-			client = redis.createClient(17264, 'pub-redis-17264.us-east-1-2.5.ec2.garantiadata.com'),
+			//client = redis.createClient(17264, 'pub-redis-17264.us-east-1-2.5.ec2.garantiadata.com'),
 			ntwitter = require('ntwitter'),
 			credentials = require('./credentials.json'),
 			twitter = ntwitter(credentials);
+	var url = require('url');
+	var redisURL = url.parse(process.env.REDISCLOUD_URL);
+	var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+	client.auth(redisURL.auth.split(":")[1]);
 
 
 	app.use(express.static(__dirname));
