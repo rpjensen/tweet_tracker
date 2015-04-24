@@ -17,12 +17,11 @@
     "url": "https://github.com/rpjensen/tweet_tracker/issues"
   },
   "homepage": "https://github.com/rpjensen/tweet_tracker",
-	"engines": {
-		"node": "0.10.x"
-	},
+  "engines": {
+    "node": "0.10.x"
+  },
   "dependencies": {
     "express": "^4.12.3",
-    "node-redis": "^0.1.7",
     "ntwitter": "^0.5.0",
     "redis": "^0.12.1"
   }
