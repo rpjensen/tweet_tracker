@@ -29,40 +29,7 @@
 	
 	console.log("before");
 
-	//console.log(client);
-	/*client.hmset("hosts", "mjr", "1", "another", "23", "home", "1234");
-	var thing 
-client.hgetall("hosts", function (err, obj) {
-    console.log(obj);
-	for (var i = 0; i < obj.length; i++) {
-		console.log(obj[i]);
-		console.log(obj[i].toString());
-	}
-});*/
-	/*
-	client.hmset("1", "filter","climate change", "tweet","climate change is bad mkay");
-	//console.log(client);
-	console.log("after");
-	client.hgetall("1", function (err, object) {
-					if (err) {
-						console.log("Error getting tweet " + keys[i]);
-					}
-					else if (object) {
-						//var javaObject = JSON.parse(object);
-						var arr = object.toString().split(",");
-						var object = {};
-						var lastKey;
-						for (var i = 0; i < arr.length; i++) {
-							if (i % 2 === 0) {
-								lastKey = arr[i];
-								object[lastKey] = arr[i+1];
-							}
-						}
-						console.log(arr);	
-						console.log(object);
-					}
-	});
-	*/
+	
 	// add a tweet
 	var addTweet = (function() {
 		// the current insert id
@@ -73,12 +40,8 @@ client.hgetall("hosts", function (err, obj) {
 			console.log("add tweet called");
 			count++;// inc the count
 			// a tweet has a filter and the text
-			//var tweet = {"filter" : filter, "tweet" : text};
-			//var tweet = [count, "filter", filter, "tweet", text];
-			//console.log(tweet);
 			client.hmset(count, "filter", filter, "tweet", text);// the key is just the count
 			client.expire(count, 10);// set the expiration time for the tweet
-			
 		};
 	}());
 
@@ -93,9 +56,9 @@ client.hgetall("hosts", function (err, obj) {
 		
 		
 		// get all the keys
-		var callback = function (keys) {
+		var keysCallback = function (keys) {
 			
-			console.log("callback got keys");
+			console.log("keysCallback got keys");
 			var updates = {counts : [], tweets : []};
 			// create the container for the tweets we fetch
 			for (var i = 0; i < filters.length; i++) {
@@ -108,31 +71,30 @@ client.hgetall("hosts", function (err, obj) {
 				if (waiting <= 0) {
 					updates.tweets.sort(function(a, b) {
 						// a < b => -, a > b => +, a = b => 0
-						return parseInt(a.filter) - parseInt(b.filter);
+						return parseInt(a.id) - parseInt(b.id);
 					});
+					console.log("Sending Updates");
+					console.log(updates);
 					res.send(updates);	
 				}
 			};
 			// for each key get the hash set that contains the tweet
-			for (var i = 0; i < keys.length; i++) {
-				// get the hash object for that key
-				console.log("calling hgetall on key " + keys[i]);
-				client.hgetall(keys[i], function (err, object) {
-					console.log("inside hgetall for key " + keys[i]);
+			keys.forEach(function(val, i) {
+				console.log("calling hgetall on key " + val);
+				client.hgetall(val, function (err, object) {
+					console.log("inside hgetall for key " + val);
 					if (err) {
-						console.log("Error getting tweet " + keys[i]);
+						console.log("Error getting tweet " + val);
 					}
 					else if (object) {
-						/*console.log(object.keys());
-						console.log(object.toString());
-						var arr = object.toString().split(",");*/
 						var arr = [];
 						for (var j = 0; j < object.length; j++) {
 							arr.push(object[j].toString());	
 						}
-						console.log(object);
+						console.log("Tweet object returned " + object);
 						console.log(arr);
 						var object = {};
+						object.id = i;
 						var lastKey;
 						for (var j = 0; j < arr.length; j++) {
 							if (j % 2 === 0) {
@@ -140,7 +102,7 @@ client.hgetall("hosts", function (err, obj) {
 								object[lastKey] = arr[j+1];
 							}
 						}	
-						console.log(object);
+						console.log("Transformed object " + object);
 						updates.tweets.push(object);
 						for (var j = 0; j < updates.counts.length; j++) {
 							if (updates.counts[j].filter === object.filter) {
@@ -150,39 +112,53 @@ client.hgetall("hosts", function (err, obj) {
 					}
 					getDone();
 				});
-			}
-			console.log("waiting");
-		/*	while(waiting > 0) {
-				// empty loop while we wait for async calls
-				// obviously not the most efficient way to do this
-			}
-			process.nextTick(function() {
-				if (waiting > 0) {
-					process.nextTick(arguments.callee);
-				}
 			});
-			*/
+			/*
+			for (var i = 0; i < keys.length; i++) {
+				// get the hash object for that key
+				console.log("calling hgetall on key " + keys[i]);
+				client.hgetall(keys[i], function (err, object) {
+					console.log("inside hgetall for key " + keys[i]);
+					if (err) {
+						console.log("Error getting tweet " + keys[i]);
+					}
+					else if (object) {
+						var arr = [];
+						for (var j = 0; j < object.length; j++) {
+							arr.push(object[j].toString());	
+						}
+						console.log("Tweet object returned " + object);
+						console.log(arr);
+						var object = {};
+						var lastKey;
+						for (var j = 0; j < arr.length; j++) {
+							if (j % 2 === 0) {
+								lastKey = arr[j];
+								object[lastKey] = arr[j+1];
+							}
+						}	
+						console.log("Transformed object " + object);
+						updates.tweets.push(object);
+						for (var j = 0; j < updates.counts.length; j++) {
+							if (updates.counts[j].filter === object.filter) {
+								updates.counts[j].count++;
+							}
+						}
+					}
+					getDone();
+				});
+			}*/
 			
-			if (waiting <= 0) {
-				console.log("callback called");
-				callback(updates);	
-			}
-	
-			console.log("made it past waiting");
-
-			
-			//res.send(updates);
 		};
 		client.keys('*', function (err, keys) {
 			console.log(keys.toString());
 			var parsedKeys = keys.toString().split(",");
 			console.log(parsedKeys);
-			callback(parsedKeys);
+			keysCallback(parsedKeys);
 		});
 		
 	};
 	
-	console.log(getTweets);
 	app.get("/getTweets", getTweets);
 	app.get("/getFilters", getFilters);
 
