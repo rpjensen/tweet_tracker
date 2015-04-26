@@ -5,15 +5,15 @@
 			http = require("http"),
 			app = express(),
 			redis = require('redis'),
-			//client = redis.createClient(17264, 'pub-redis-17264.us-east-1-2.5.ec2.garantiadata.com'),
+			client = redis.createClient(),
 			ntwitter = require('ntwitter'),
 			credentials = require('./credentials.json'),
 			twitter = ntwitter(credentials);
-	var url = require('url');
+	/*var url = require('url');
 	var redisURL = url.parse(process.env.REDISCLOUD_URL);
 	var client = redis.createClient(redisURL.port, redisURL.hostname);//, {no_ready_check: true}
 	client.auth(redisURL.auth.split(":")[1]);
-	console.log(client);
+	console.log(client);*/
 	
 
 
@@ -21,11 +21,12 @@
 	app.get('/', function(req, res) {
 	  res.render('index.html');
 	});
-	var port = Number(process.env.PORT || 5000);
+	/*var port = Number(process.env.PORT || 5000);
 	app.listen(port, function() {
 	  console.log("Listening on " + port);
 	});
-	//http.createServer(app).listen(3000);
+*/
+	http.createServer(app).listen(3000);
 	
 	console.log("before");
 
@@ -37,7 +38,7 @@
 		// the actual add tweet function
 		return function (filter, text) {
 			//console.log("filter: " + filter + ", tweet: " + text);
-			console.log("add tweet called");
+			console.log("add tweet called for " + filter);
 			count++;// inc the count
 			// a tweet has a filter and the text
 			client.hmset(count, "filter", filter, "tweet", text);// the key is just the count
@@ -82,13 +83,15 @@
 			keys.forEach(function(val, i) {
 				console.log("calling hgetall on key " + val);
 				client.hgetall(val, function (err, object) {
-					console.log("inside hgetall for key " + val);
+					console.log("inside hgetall respon for key " + val);
 					if (err) {
 						console.log("Error getting tweet " + val);
 					}
 					else if (object) {
+						/*
 						var arr = [];
 						for (var j = 0; j < object.length; j++) {
+							console.log(object[j].toString());
 							arr.push(object[j].toString());	
 						}
 						console.log("Tweet object returned " + object);
@@ -102,6 +105,8 @@
 								object[lastKey] = arr[j+1];
 							}
 						}	
+						*/
+						object.id = val;
 						console.log("Transformed object " + object);
 						updates.tweets.push(object);
 						for (var j = 0; j < updates.counts.length; j++) {
