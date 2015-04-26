@@ -5,15 +5,15 @@
 			http = require("http"),
 			app = express(),
 			redis = require('redis'),
-			client = redis.createClient(),
+			//client = redis.createClient(),
 			ntwitter = require('ntwitter'),
 			credentials = require('./credentials.json'),
 			twitter = ntwitter(credentials);
-	/*var url = require('url');
+	var url = require('url');
 	var redisURL = url.parse(process.env.REDISCLOUD_URL);
 	var client = redis.createClient(redisURL.port, redisURL.hostname);//, {no_ready_check: true}
 	client.auth(redisURL.auth.split(":")[1]);
-	console.log(client);*/
+	console.log(client);
 	
 
 
@@ -21,12 +21,12 @@
 	app.get('/', function(req, res) {
 	  res.render('index.html');
 	});
-	/*var port = Number(process.env.PORT || 5000);
+	var port = Number(process.env.PORT || 5000);
 	app.listen(port, function() {
 	  console.log("Listening on " + port);
 	});
-*/
-	http.createServer(app).listen(3000);
+
+//	http.createServer(app).listen(3000);
 	
 	console.log("before");
 
