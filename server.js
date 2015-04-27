@@ -37,11 +37,6 @@
 	app.listen(port, function() {
 	  console.log("Listening on " + port);
 	});
-
-//	http.createServer(app).listen(3000);
-	
-	console.log("before");
-
 	
 	// add a tweet
 	var addTweet = (function() {
@@ -49,7 +44,6 @@
 		var count = 0;
 		// the actual add tweet function
 		return function (filter, text) {
-			//console.log("filter: " + filter + ", tweet: " + text);
 			console.log("add tweet called for " + filter);
 			count++;// inc the count
 			// a tweet has a filter and the text
@@ -100,24 +94,7 @@
 						console.log("Error getting tweet " + val);
 					}
 					else if (object) {
-						/*
-						var arr = [];
-						for (var j = 0; j < object.length; j++) {
-							console.log(object[j].toString());
-							arr.push(object[j].toString());	
-						}
-						console.log("Tweet object returned " + object);
-						console.log(arr);
-						var object = {};
-						object.id = i;
-						var lastKey;
-						for (var j = 0; j < arr.length; j++) {
-							if (j % 2 === 0) {
-								lastKey = arr[j];
-								object[lastKey] = arr[j+1];
-							}
-						}	
-						*/
+						// Process the object
 						object.id = val;
 						console.log("Transformed object " + object);
 						updates.tweets.push(object);
@@ -129,43 +106,7 @@
 					}
 					getDone();
 				});
-			});
-			/*
-			for (var i = 0; i < keys.length; i++) {
-				// get the hash object for that key
-				console.log("calling hgetall on key " + keys[i]);
-				client.hgetall(keys[i], function (err, object) {
-					console.log("inside hgetall for key " + keys[i]);
-					if (err) {
-						console.log("Error getting tweet " + keys[i]);
-					}
-					else if (object) {
-						var arr = [];
-						for (var j = 0; j < object.length; j++) {
-							arr.push(object[j].toString());	
-						}
-						console.log("Tweet object returned " + object);
-						console.log(arr);
-						var object = {};
-						var lastKey;
-						for (var j = 0; j < arr.length; j++) {
-							if (j % 2 === 0) {
-								lastKey = arr[j];
-								object[lastKey] = arr[j+1];
-							}
-						}	
-						console.log("Transformed object " + object);
-						updates.tweets.push(object);
-						for (var j = 0; j < updates.counts.length; j++) {
-							if (updates.counts[j].filter === object.filter) {
-								updates.counts[j].count++;
-							}
-						}
-					}
-					getDone();
-				});
-			}*/
-			
+			});	
 		};
 		client.keys('*', function (err, keys) {
 			console.log(keys.toString());
@@ -197,7 +138,6 @@
 		function(stream) {
 			stream.on("data", function(tweet) {
 				// for each filter
-				//console.log(tweet.text);
 				for (var i = 0; i < splitFilters.length; i++) {
 					// if the match falls through and is still true we have a full match
 					var match = true;

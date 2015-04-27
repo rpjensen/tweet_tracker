@@ -30,6 +30,8 @@
 	var main = function() {
 		
 		var timer;
+		var lastResponseTime;
+		var updateRate = tweetTracker('getUpdateRate')();
 
 		var fetchUpdates = function () {
 			console.log("fetch updates called");
@@ -40,7 +42,12 @@
 				data['label'+index] = value;
 			});
 			*/
-
+			var timeSinceLast = new Date().getTime() - lastResponseTime;
+			// if we haven't waited enough time set a new timeout and return
+			if (timeSinceLast < updateRate) {
+				timer = setTimeout(fetchUpdates, updateRate-timeSinceLast);
+				return;
+			}
 			$.get(resource, data, function (responseObject) {
 				console.log(responseObject);
 				//var responseObject = JSON.parse(reply);
@@ -49,8 +56,9 @@
 				tweetTracker('updateCounts')(counts);
 				var tweets = responseObject.tweets;
 				tweetTracker('updateTweets')(tweets);
+				lastResponseTime = new Date().getTime();
+				timer = setTimeout(fetchUpdates, updateRate);
 			});
-			timer = setTimeout(fetchUpdates, 10000);
 		};
 
 		var currentLabels = [];
@@ -61,13 +69,6 @@
 		});
 
 		$('#start-tracking').on('click', function () {
-			/*
-			$('.label-input__widget').each(function (index, input) {
-				var prefix = 'label-input__widget-';
-				var id = parseInt(input.id.substring(prefix.length)) - 1;
-				currentLabels[id] = $(input).val();
-			});
-			*/
 			$('#stop-tracking').prop('disabled', false);
 			$(this).prop('disabled', true);
 
@@ -156,6 +157,7 @@ var tweetTracker = (function() {
 	var tweetLabels = [];
 	var tweets = [];
 	var updateRate = 10000;
+	var filterLabel = "";
 
 	return function(msg) {
 		// Reset the filters
@@ -203,7 +205,9 @@ var tweetTracker = (function() {
 				for (var i = 0; i < tweetList.length; i++) {
 					var current = tweetList[i];
 					tweets.push(current.tweet);
-					tweetFeed('addTweet')(current.tweet);
+					if (filterLabel === current.filter || filterLabel === '') {
+						tweetFeed('addTweet')(current.tweet);
+					}
 					for (var j = 0; j < tweetLabels.length; j++) {
 						// check if the tweet key is the same as the tweet filter label
 						if (current.filter === tweetLabels[j]('getLabel')()) {
@@ -237,11 +241,13 @@ var tweetTracker = (function() {
 				tweetFeed('clearTweets')();
 				if (!label) {
 					// add all tweets (no filter)
+					filterLabel = '';
 					tweetFeed('addTweets')(tweets);
 					$('.selected-filter__label').text('(all)');
 				}
 				else {
 					$('.selected-filter__label').text('(' + label + ')');
+					filterLabel = label;
 					// find the given label and get its tweets
 					for (var i = 0; i < tweetLabels.length; i++) {
 						if (label === tweetLabels[i]('getLabel')()) {
