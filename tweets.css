@@ -75,6 +75,7 @@ h1 {
 	background-color: red;
 	z-index: 10;
 	box-shadow: 1px -1px 3px #555;
+	cursor: pointer;
 }
 
 #graph__bar-1 {
