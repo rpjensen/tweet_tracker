@@ -5,15 +5,27 @@
 			http = require("http"),
 			app = express(),
 			redis = require('redis'),
-			//client = redis.createClient(),
 			ntwitter = require('ntwitter'),
 			credentials = require('./credentials.json'),
 			twitter = ntwitter(credentials);
+
+	
 	var url = require('url');
-	var redisURL = url.parse(process.env.REDISCLOUD_URL);
-	var client = redis.createClient(redisURL.port, redisURL.hostname);//, {no_ready_check: true}
-	client.auth(redisURL.auth.split(":")[1]);
-	console.log(client);
+	if (typeof process.env.REDISCLOUD_URL != 'undefined') {
+		/* Heroku */
+		var redisURL = url.parse(process.env.REDISCLOUD_URL);
+		var client = redis.createClient(redisURL.port, redisURL.hostname);//, {no_ready_check: true}
+		client.auth(redisURL.auth.split(":")[1]);
+		console.log(client);
+	}
+	else {
+		/* Local */
+		var client = redis.createClient();
+	}
+	
+	
+	//
+	
 	
 
 
@@ -21,7 +33,7 @@
 	app.get('/', function(req, res) {
 	  res.render('index.html');
 	});
-	var port = Number(process.env.PORT || 5000);
+	var port = Number(process.env.PORT || 3000);
 	app.listen(port, function() {
 	  console.log("Listening on " + port);
 	});
